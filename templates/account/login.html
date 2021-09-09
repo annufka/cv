@@ -1,12 +1,20 @@
+{% load widget_tweaks %}
 {% extends "base.html" %}
+
 {% block title %}Login{% endblock %}
 {% block content %}
-    <div class="d-block justify-content-center align-items-center">
-    <h1>Login</h1>
-    <form action="." method="post">
-        {{ form.as_p }}
-        {% csrf_token %}
-        <p><input type="submit" value="Login"></p>
-    </form>
+    <div class="row d-block justify-content-center align-items-center">
+        <h1>Login</h1>
+        <form action="." method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                {% for i in form.as_p %}
+                    <div class="input-group">
+                        {% i %}
+                    </div>
+                {% endfor %}
+            </div>
+            <p><input type="submit" value="Login"></p>
+        </form>
     </div>
 {% endblock %}
