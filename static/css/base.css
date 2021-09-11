@@ -1,0 +1,13 @@
+html, body {
+    margin: 0 !important;
+    height: 100% !important;
+}
+
+body {
+    font-family: "Helvetica Neue", sans-serif !important;
+    color: #373A3C !important;
+}
+
+h1 {
+    font-size: 2.25em !important;
+}
