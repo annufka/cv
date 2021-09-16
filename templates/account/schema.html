@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Scheme{% endblock %}
+
+
+{% block content %}
+    {% include "header.html" %}
+    <div class="container">
+        Name of scheme - {{ scheme.name }}<br>
+        Modified date - {{ scheme.modified_date }}
+    </div>
+{% endblock %}

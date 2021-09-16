@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Data schemas{% endblock %}
+
+
+{% block content %}
+    {% include "header.html" %}
+    <div class="container mt-4">
+        <table class="table table-bordered">
+            <div class="d-flex justify-content-between mb-3">
+                <h4>Data schemas</h4>
+                <a class="btn btn-success" href="{% url 'add_scheme_and_row' %}">New schema</a>
+            </div>
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">Modified</th>
+                <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for scheme in schemas %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td><a href="{% url 'scheme' scheme.pk %}" class="text-decoration-none">{{ scheme.name }}</a></td>
+                    <td>{{ scheme.modified_date|date:"Y-m-d" }}</td>
+                    <td>
+                        <a href="#" class="text-decoration-none px-2">Edit scheme</a>
+                        {# сделала сначала удаление, потом посмотрела в тестовое, там об этих функциях ничего нет, поэтому edit не делала #}
+                        <a href="{% url 'delete' scheme.pk %}" class="text-danger text-decoration-none">Delete</a>
+                    </td>
+                </tr>
+            {% empty %}
+                <p>There are no schemas yet</p>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
