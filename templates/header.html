@@ -11,7 +11,12 @@
                 {# по цвету пункты напоминают disabled #}
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Hello, <b>{{ request.user.first_name }}</b></a>
+                        <a class="nav-link" href="#">Hello, <b>
+                            {% if request.user.first_name %}
+                                {{ request.user.first_name }}
+                            {% else %}
+                                {{ request.user.username }}
+                            {% endif %}</b></a>
                         {# пусть это будет ссылкой, может на профайл ведет #}
                     </li>
                     <li class="nav-item">

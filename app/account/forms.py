@@ -3,6 +3,9 @@ from django.forms import inlineformset_factory
 
 from app.account.models import Schema, ColumnSchema
 
+class LoginForm(forms.Form):
+    username = forms.CharField(widget=forms.TextInput)
+    password = forms.CharField(widget=forms.PasswordInput)
 
 class SchemeForm(forms.ModelForm):
     class Meta:

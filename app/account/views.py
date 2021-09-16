@@ -1,18 +1,30 @@
-import os
-
-from celery import current_app
-from django.conf import settings
+from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
-from django.core.files.storage import FileSystemStorage
-from django.http import JsonResponse, HttpResponse, Http404
+from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
-from django.views import View
 from django.views.generic import CreateView
 
-from app.account.forms import SchemeForm, RowFormSet
+from app.account.forms import SchemeForm, RowFormSet, LoginForm
 from app.account.models import Schema, DataSet, ColumnSchema
 from app.account.tasks import generate_csv
+
+def login(request):
+    form = LoginForm(request.POST)
+    if form.is_valid():
+        cd = form.cleaned_data
+        user = authenticate(username=cd['username'], password=cd['password'])
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+            else:
+                user = User.objects.create_user(username=cd['username'], password=cd['password'])
+                login(request, user)
+    else:
+        form = LoginForm()
+        return render(request, 'account/login.html', {'form': form})
+    schemas = Schema.objects.all().order_by('pk')
+    return render(request, 'registration/schemas.html', {'schemas': schemas})
 
 
 @login_required
