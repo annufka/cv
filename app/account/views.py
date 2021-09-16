@@ -9,6 +9,8 @@ from app.account.forms import SchemeForm, RowFormSet, LoginForm
 from app.account.models import Schema, DataSet, ColumnSchema
 from app.account.tasks import generate_csv
 
+
+# немного не ясен первый пункт тестового, поэтому сделала так, чтобы мог зайти любой человек под любым логином и паролем, иначе эта часть комментируется и в urls раскомментируется строчка, а другая убирается
 def login(request):
     form = LoginForm(request.POST)
     if form.is_valid():
@@ -156,5 +158,3 @@ def generate_sets(request):
 #         if task.status == 'SUCCESS':
 #             response_data['results'] = task.get()
 #         return JsonResponse(response_data)
-
-
