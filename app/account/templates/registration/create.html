@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+{% block title %}New scheme{% endblock %}
+
+{% block bottom_scrip %} {{ block.super }}
+    <script>
+        $(function () {
+            $('.add-more').click(function (ev) {
+                ev.preventDefault();
+                var count = $('#form_set').children().length;
+                var tmplMarkup = $('#empty_form').html();
+                var compiledTmpl = tmplMarkup.replace(/__prefix__/g, count);
+                $('div#form_set').append(compiledTmpl);
+                $('#id_columnschema_set-TOTAL_FORMS').attr('value', count + 1);
+            });
+        });
+    </script>
+    <script>
+        function del(obj) {
+            var btn_id = obj.id;
+            document.getElementById("id_" + btn_id + "-DELETE").checked = true;
+            var form_id = btn_id.replace("_set", "");
+            document.getElementById(form_id).hidden = true;
+        }
+    </script>
+{% endblock %}
+
+{% block content %}
+    {% include "header.html" %}
+    <div class="container">
+        <form action="{% url 'add_scheme_and_row' %}" method="post">
+            {{ formset.management_form }}
+            {% csrf_token %}
+            {#             Первая форма#}
+            <div class="d-flex justify-content-between align-items-center">
+                <h4 class="mt-4 mb-3">New scheme</h4>
+                <div>
+                    <button type="submit" class="save btn btn-primary">Submit</button>
+                </div>
+            </div>
+            {#  в фигме тут h2 тег, но нет, ну совсем нет. 24 px = 1.5 em, а это h4 #}
+            <div class="form-group col-5">
+                <label class="form-label" for="id_name">Name</label>
+                {% render_field form.name|add_class:"form-control" %}
+            </div>
+            <div class="form-group col-5 mt-3">
+                <label class="form-label" for="id_column_separator">Column separator</label>
+                {% render_field form.column_separator|add_class:"form-select"|add_required_class:"double" %}
+            </div>
+            <div class="form-group col-5 mt-3">
+                <label class="form-label" for="id_string_character">Column separator</label>
+                {% render_field form.string_character|add_class:"form-select"|add_required_class:"double" %}
+            </div>
+            <h4 class="mt-4 mb-3">Scheme columns</h4>
+            {# Вторая форма #}
+            <div class="rows" id="form_set">
+                {% for form in formset %}
+                    <div class="row mt-4" id="columnschema-0">
+                        <div class="form-group col-4">
+                            <label class="form-label" for="id_column_name">Column name</label>
+                            {% render_field form.column_name|add_class:"form-control" %}
+                        </div>
+                        <div class="form-group col-3">
+                            <label class="form-label" for="id_columnschema_set-0-type_of_data">Type</label>
+                            {% render_field form.type_of_data|add_class:"form-select"|add_required_class:"double" %}
+                        </div>
+                        <div class="form-group col-2">
+                            <label class="form-label" for="id_columnschema_set-0-order">Order</label>
+                            {% render_field form.order|add_class:"form-control" %}
+                        </div>
+                        <div class="form-group d-flex col-2 align-content-end flex-wrap">
+                            <div>
+                                {{ form.DELETE|add_class:'d-none' }}
+                                <a class="text-danger text-decoration-none" type="button" id="{{ form.prefix }}"
+                                   onclick="del(this)">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <a href="#" class="btn btn-primary add-row mt-4 add-more" id="add_more">Add column</a>
+            {# а это скрытая форма #}
+            <div id="empty_form" style="display:none">
+                <div id="columnschema-__prefix__">
+                    {% with formset.empty_form as form %}
+                        <div class="row mt-4" id="{{ form.prefix }}">
+                            <div class="form-group col-4">
+                                <label class="form-label" for="id_column_name">Column name</label>
+                                {% render_field form.column_name|add_class:"form-control" %}
+                            </div>
+                            <div class="form-group col-3">
+                                <label class="form-label" for="id_columnschema_set-0-type_of_data">Type</label>
+                                {% render_field form.type_of_data|add_class:"form-select"|add_required_class:"double" %}
+                            </div>
+                            <div class="form-group col-2">
+                                <label class="form-label" for="id_columnschema_set-0-order">Order</label>
+                                {% render_field form.order|add_class:"form-control" %}
+                            </div>
+                            <div class="form-group d-flex col-2 align-content-end flex-wrap">
+                                <div>
+                                    {{ form.DELETE|add_class:'d-none' }}
+                                    <a class="text-danger text-decoration-none" type="button" id="{{ form.prefix }}"
+                                       onclick="del(this)">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endwith %}
+                </div>
+            </div>
+        </form>
+    </div>
+    <footer class="mt-5">
+
+    </footer>
+{% endblock %}

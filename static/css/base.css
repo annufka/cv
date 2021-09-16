@@ -1,13 +1,56 @@
-html, body {
-    margin: 0 !important;
-    height: 100% !important;
-}
-
 body {
-    font-family: "Helvetica Neue", sans-serif !important;
     color: #373A3C !important;
 }
 
-h1 {
-    font-size: 2.25em !important;
+.block {
+    width: 100%;
+    min-height: 100vh;
 }
+
+.card {
+    margin: 0;
+    padding: 50px 150px;
+    border: 1px solid #E5E5E5 !important;
+    box-sizing: border-box;
+    border-radius: 4px;
+}
+
+.login-form {
+    width: 100%;
+}
+
+.form-title {
+    padding-bottom: 30px;
+}
+
+.login-form-input {
+    padding-bottom: 20px;
+}
+
+table td a {
+    text-decoration: none !important;
+}
+
+.double {
+    background-image: url("https://img.icons8.com/ios-glyphs/30/000000/sort.png") !important;
+}
+
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none !important;
+    margin: 0 !important; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input[type='number'] {
+    -moz-appearance: textfield !important;
+}
+
+/*.table-sets tbody tr td .div-white {*/
+/*    width: max-content;*/
+/*    border-radius: 4px;*/
+/*    color: white;*/
+/*}*/
+
+/*p.text-white {*/
+/*    padding: 10px;*/
+/*}*/

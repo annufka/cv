@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}Data sets{% endblock %}
+
+
+{% block content %}
+    {% include "header.html" %}
+    <div class="container mt-4">
+        <table class="table table-bordered table-sets">
+            <div class="d-flex justify-content-between mb-3">
+                <h4>Data schemas</h4>
+                <div class="d-flex justify-content-end align-content-center flex-wrap">
+                    {# тут у меня беда с выравниванием по вертикали, точнее с его отсутствием #}
+                    <p class="m-2">Rows:</p>
+                    {#                    <div class="m-1">#}
+                    {#                        #}
+                    {#                    </div>#}
+                    <div class="m-1" style="display: contents">
+                        <form action='{% url 'generate_sets' %}' method="POST" class="form-inline">
+                            {% csrf_token %}
+                            <div class="form-group col-2" style="margin-right: 10px;">
+                                <input type="number" name="generate_number" class="form-control">
+                            </div>
+                            <button type="submit" class="btn btn-success">Generate
+                                data
+                            </button>
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Created</th>
+                <th scope="col">Status</th>
+                <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for set in sets %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ set.create_date|date:"Y-m-d" }}</td>
+                    <td>
+                        <div id="progress-title-{{ set.pk }}"></div>
+                        {#                        {% if set.path_to_file %}#}
+                        {# извините, но почему-то только так и работает. Может я уже просто думать устала) #}
+                        {#                            <div class="div-white bg-success" id="progress-title-{{ set.pk }}" style="width: max-content; border-radius: 4px;">#}
+                        {#                                <p class="text-white p-1">Ready</p></div>#}
+                        {#                        {% elif not set.path_to_file %}#}
+                        {#                            <div class="div-white bg-secondary" id="progress-title-{{ set.pk }}" style="width: max-content; border-radius: 4px;">#}
+                        {#                                <p class="text-white p-1">Progressing</p></div>#}
+                        {#                        {% else %}#}
+                        {#                           #}
+                        {#                        {% endif %}#}
+                    </td>
+                    <td>
+                        {% if set.path_to_file %}
+                            <a href="#" class="text-decoration-none px-2 download">Download</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% empty %}
+                <p>There are no data sets yet</p>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
