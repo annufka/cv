@@ -140,4 +140,4 @@ CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
 
 # Activate Django-Heroku.
-django_heroku.settings(locals())
+test_project.settings(locals())
