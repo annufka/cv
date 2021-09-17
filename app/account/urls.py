@@ -14,7 +14,7 @@ urlpatterns = [
     path('scheme/<int:scheme_id>', views.scheme, name='scheme'),
     # path('create/scheme/', views.SchemeAndRow.as_view(), name='add_scheme_and_row'),
     # path('create/scheme/row/<str:name>', views.create_scheme_row, name='create_row'),
-    url(r'^add/$', views.SchemeAndRow.as_view(), name='add_scheme_and_row'),
+    url(r'^add/$', views.SchemeAndRow, name='add_scheme_and_row'),
     path('data/sets/', views.get_sets, name='sets'),
     path('generete/sets/', views.generate_sets, name='generate_sets'),
 ]
