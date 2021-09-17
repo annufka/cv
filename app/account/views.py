@@ -126,7 +126,6 @@ class FormsetMixin(object):
     def form_invalid(self, form, formset):
         return self.render_to_response(self.get_context_data(form=form, formset=formset))
 
-@login_required
 class SchemeAndRow(FormsetMixin, CreateView):
     template_name = 'registration/create.html'
     model = Schema
