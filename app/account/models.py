@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
+from django.dispatch import receiver
 
 
 class Schema(models.Model):
@@ -42,3 +43,8 @@ class DataSet(models.Model):
     create_date = models.DateTimeField(auto_now_add=True)
     path_to_file = models.FilePathField(path='media', null=True, blank=True)
     # status = models.CharField(max_length=10, choices=STATUS_CHOICE, default="nothing")
+
+@receiver(post_save, sender=Schema)
+def create_data_set(sender, instance, created, **kwargs):
+    if created:
+        DataSet.objects.create(schema=instance)
