@@ -24,7 +24,7 @@ def login(request):
                 login(request, user)
     else:
         form = LoginForm()
-        return render(request, 'account/login.html', {'form': form})
+        return render(request, 'registration/login.html', {'form': form})
     schemas = Schema.objects.all().order_by('pk')
     return render(request, 'registration/schemas.html', {'schemas': schemas})
 
