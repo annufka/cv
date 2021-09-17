@@ -11,22 +11,22 @@ from app.account.tasks import generate_csv
 
 
 # немного не ясен первый пункт тестового, поэтому сделала так, чтобы мог зайти любой человек под любым логином и паролем, иначе эта часть комментируется и в urls раскомментируется строчка, а другая убирается
-def login(request):
-    form = LoginForm(request.POST)
-    if form.is_valid():
-        cd = form.cleaned_data
-        user = authenticate(username=cd['username'], password=cd['password'])
-        if user is not None:
-            if user.is_active:
-                login(request, user)
-            else:
-                user = User.objects.create_user(username=cd['username'], password=cd['password'])
-                login(request, user)
-    else:
-        form = LoginForm()
-        return render(request, 'registration/login.html', {'form': form})
-    schemas = Schema.objects.all().order_by('pk')
-    return render(request, 'registration/schemas.html', {'schemas': schemas})
+# def login(request):
+#     form = LoginForm(request.POST)
+#     if form.is_valid():
+#         cd = form.cleaned_data
+#         user = authenticate(username=cd['username'], password=cd['password'])
+#         if user is not None:
+#             if user.is_active:
+#                 login(request, user)
+#             else:
+#                 user = User.objects.create_user(username=cd['username'], password=cd['password'])
+#                 login(request, user)
+#     else:
+#         form = LoginForm()
+#         return render(request, 'registration/login.html', {'form': form})
+#     schemas = Schema.objects.all().order_by('pk')
+#     return render(request, 'registration/schemas.html', {'schemas': schemas})
 
 
 @login_required

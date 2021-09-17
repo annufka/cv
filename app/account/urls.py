@@ -5,8 +5,8 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    # url(r'^login/$', LoginView.as_view(), name='login'),
-    url(r'^login/$', views.login, name='login'),
+    url(r'^login/$', LoginView.as_view(), name='login'),
+    # url(r'^login/$', views.login, name='login'),
     url(r'^logout/$', LoginView.as_view(), name='logout'),
     url(r'^$', views.schemas, name='schemas'),
     path('scheme/<int:scheme_id>', views.scheme, name='scheme'),
